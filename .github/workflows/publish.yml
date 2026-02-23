@@ -1,26 +1,19 @@
-name: Publish Logseq to GitHub Pages
-
-on:
-  push:
-    branches:
-      - main
-
+name: Publish Logseq
+on: [push]
+permissions:
+  contents: write
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Build with Logseq Docker
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/data \
-            ghcr.io/logseq/publish:latest \
-            --output /data/www
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/checkout@v4
+      - uses: logseq/publish-spa@v0.3.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./www
+          graph-directory: .          # 你的图谱根目录
+          output-directory: www
+      - name: Add nojekyll
+        run: touch www/.nojekyll
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: www
