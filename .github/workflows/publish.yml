@@ -12,11 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Logseq CLI
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Logseq Publish
         run: npm install -g @logseq/publish
 
       - name: Build site
-        run: logseq-publish
+        run: logseq-publish . --output ./www
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
