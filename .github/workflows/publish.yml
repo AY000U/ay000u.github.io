@@ -2,29 +2,24 @@ name: Publish Logseq to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-
-permissions:
-  contents: write
+    branches:
+      - main
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Publish Logseq SPA
-        uses: logseq/publish-spa@v0.3.1
+      - name: Install Logseq CLI
+        run: npm install -g @logseq/publish
+
+      - name: Build site
+        run: logseq-publish
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          graph-directory: .
-          output-directory: www
-          version: 0.10.6  # Logseq 前端版本，保持最新稳定（可改 latest 但 v0.3.1 推荐固定）
-
-      - name: Add .nojekyll
-        run: touch www/.nojekyll
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: www
-          branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./www
