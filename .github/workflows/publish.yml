@@ -13,8 +13,6 @@ jobs:
           output-directory: www
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Fix asset paths
-        run: sed -i 's|src="static/|src="/logseq/static/|g; s|href="static/|href="/logseq/static/|g' www/index.html
       - name: Add nojekyll
         run: touch www/.nojekyll
       - name: Deploy to GitHub Pages
