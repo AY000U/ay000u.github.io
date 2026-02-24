@@ -4,4 +4,5 @@
  :journal/file-name-format "yyyy_MM_dd"
  :journals-directory "journals"
  :pages-directory "pages"
- :publishing/all-pages-public? true}
+ :publishing/all-pages-public? true
+ :file/name-format :triple-lowbar}
