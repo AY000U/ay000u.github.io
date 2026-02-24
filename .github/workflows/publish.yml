@@ -11,6 +11,7 @@ jobs:
         with:
           graph-directory: .
           output-directory: www
+          base-href: /logseq/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Add nojekyll
