@@ -299,7 +299,7 @@
  ;;  :charge-range    600}   ; Default value: 600
 
  ;; Favorites to list on the left sidebar
- :favorites []
+ :favorites ["logseq"]
 
  ;; Set flashcards interval.
  ;; Expected value:
@@ -418,7 +418,19 @@
  ;;   - :triple-lowbar (default)
  ;;      ;use triple underscore `___` for slash `/` in page title
  ;;      ;use Percent-encoding for other invalid characters
+<<<<<<< HEAD
  :file/name-format :triple-lowbar
  :graph/settings {:builtin-pages? true
  :journal? false
- :orphan-pages? false}}
+ :orphan-pages? true}
+ :journal/page-title-format "yyyy-MM-dd"}
+=======
+:file/name-format :triple-lowbar
+
+:publishing/all-pages-public? true
+
+:graph/settings {:builtin-pages? true
+                 :journal? true
+                 :orphan-pages? true}}
+
+>>>>>>> 24b8f9e8574806e13d5fe5918f74a030d1a8d748
