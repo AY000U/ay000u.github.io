@@ -1,32 +1,29 @@
-name: Publish Logseq
-on: [push]
+name: Publish Logseq graph
+
+on:
+  push:
+  workflow_dispatch:
+
 permissions:
   contents: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
+    name: Publish Logseq graph
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Add public to all journals
-        run: |
-          for f in journals/*.md; do
-            if ! grep -q "^public:: true" "$f"; then
-              sed -i '1s/^/public:: true\n/' "$f"
-            fi
-          done
+      - name: Build Logseq site
+        uses: logseq/publish-spa@v0.3.0
 
-      - uses: logseq/publish-spa@v0.1.0
-        with:
-          graph-directory: .
-          output-directory: www
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Add nojekyll
+      - name: Add .nojekyll
         run: touch www/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          branch: gh-pages
           folder: www
